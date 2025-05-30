@@ -1,0 +1,82 @@
+import numpy as np
+
+# Logistic regression coefficients
+coefficients = {
+    "const": -3.1531,
+    "_SMOKGRP": -0.2888,
+    "_BMI5": 5.881e-05,
+    "DIABETE4": 2.2756,
+    "SEXVAR": -1.3009,
+    "AGE": 0.0566,
+    "ALCDAY4": -0.0010,
+    "EXERANY2": -0.0084,
+    "CHCCOPD3": 1.2957,
+    "CHCKDNY2": 1.2508,
+    "ADDEPEV3": 2.3435,
+    "HAVARTH4": 1.4306,
+    "_SMOKGRP_x__BMI5": -5.73e-05,
+    "_SMOKGRP_x_SEXVAR": -0.0453,
+    "_SMOKGRP_x_AGE": 0.0028,
+    "_SMOKGRP_x_ALCDAY4": 0.0001,
+    "_SMOKGRP_x_EXERANY2": 0.0895,
+    "_SMOKGRP_x_CHCCOPD3": 0.2049,
+    "_SMOKGRP_x_ADDEPEV3": 0.0581,
+    "_SMOKGRP_x_HAVARTH4": 0.0465,
+    "_BMI5_x_DIABETE4": 7.103e-05,
+    "_BMI5_x_SEXVAR": -5.262e-06,
+    "_BMI5_x_EXERANY2": -0.0001,
+    "_BMI5_x_CHCKDNY2": -4.342e-05,
+    "_BMI5_x_HAVARTH4": 2.032e-05,
+    "DIABETE4_x_SEXVAR": 0.0836,
+    "DIABETE4_x_AGE": -0.0179,
+    "DIABETE4_x_ALCDAY4": -0.0002,
+    "DIABETE4_x_EXERANY2": -0.1105,
+    "DIABETE4_x_CHCKDNY2": -0.0762,
+    "DIABETE4_x_ADDEPEV3": -0.1120,
+    "SEXVAR_x_ALCDAY4": 0.0003,
+    "SEXVAR_x_EXERANY2": 0.0999,
+    "SEXVAR_x_CHCCOPD3": 0.0548,
+    "SEXVAR_x_ADDEPEV3": -0.0659,
+    "AGE_x_ALCDAY4": 7.525e-06,
+    "AGE_x_CHCCOPD3": -0.0112,
+    "AGE_x_ADDEPEV3": -0.0217,
+    "AGE_x_HAVARTH4": -0.0046,
+    "CHCCOPD3_x_ADDEPEV3": -0.0552,
+    "CHCCOPD3_x_HAVARTH4": -0.0305,
+}
+
+# Sample input values
+input_values = {
+    "const": 1,
+    "_SMOKGRP": 1,
+    "_BMI5": 2800,
+    "DIABETE4": 0,
+    "SEXVAR": 0,
+    "AGE": 25,
+    "ALCDAY4": 1,
+    "EXERANY2": 1,
+    "CHCCOPD3": 0,
+    "CHCKDNY2": 0,
+    "ADDEPEV3": 0,
+    "HAVARTH4": 0,
+}
+
+# Add interaction terms
+input_values["_SMOKGRP_x__BMI5"] = input_values["_SMOKGRP"] * input_values["_BMI5"]
+input_values["_SMOKGRP_x_SEXVAR"] = input_values["_SMOKGRP"] * input_values["SEXVAR"]
+input_values["_SMOKGRP_x_AGE"] = input_values["_SMOKGRP"] * input_values["AGE"]
+input_values["_SMOKGRP_x_ALCDAY4"] = input_values["_SMOKGRP"] * input_values["ALCDAY4"]
+input_values["_SMOKGRP_x_EXERANY2"] = input_values["_SMOKGRP"] * input_values["EXERANY2"]
+input_values["_SMOKGRP_x_CHCCOPD3"] = input_values["_SMOKGRP"] * input_values["CHCCOPD3"]
+input_values["_SMOKGRP_x_ADDEPEV3"] = input_values["_SMOKGRP"] * input_values["ADDEPEV3"]
+input_values["_SMOKGRP_x_HAVARTH4"] = input_values["_SMOKGRP"] * input_values["HAVARTH4"]
+
+# Calculate logit
+logit = sum(coefficients[key] * input_values.get(key, 0) for key in coefficients)
+
+# Convert logit to probability
+probability = 1 / (1 + np.exp(-logit))
+
+# Display results
+print(f"Logit: {logit:.4f}")
+print(f"Probability of heart disease: {probability:.4f}")
